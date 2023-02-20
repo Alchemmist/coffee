@@ -1,7 +1,9 @@
 import sys
+import os
 import sqlite3
 
-from PyQt5 import uic
+from ui_main import Ui_MainWindow
+
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 
 from dialog import TableChangeDialog
@@ -9,11 +11,11 @@ from db import get_all_coffee, edit_coffee, add_coffee
 from utils import convert_to_coffeeinf
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi("main.ui", self)
-        self.con = sqlite3.connect("coffee.sqlite3")
+        super().setupUi(self)
+        self.con = sqlite3.connect(os.path.join("data", "coffee.sqlite3"))
         self.add.clicked.connect(self.add_coffee)
         self.edit.clicked.connect(self.edit_table)
 
